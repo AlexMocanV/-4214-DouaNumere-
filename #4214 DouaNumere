@@ -1,0 +1,47 @@
+int DouaNumere(int a[], int n)
+{
+    int maxsum=0;
+    std::pair<int,int> zero;
+    zero.first=0;
+    zero.second=0;
+    std::pair<int,int> f[82]={zero};
+    for(int i=0;i<n;i++)
+    {
+        int cop=a[i];
+        int sum=0;
+        while(cop)
+        {
+            sum+=cop%10;
+            cop/=10;
+        }
+        if(f[sum].second==0)
+        {
+            f[sum].second=a[i];
+        }
+        else if(f[sum].first==0)
+        {
+            f[sum].first=a[i];
+            if(f[sum].first<f[sum].second)
+            {
+                std::swap(f[sum].first,f[sum].second);
+            }
+            maxsum=std::max(maxsum,f[sum].first+f[sum].second);
+        }
+        else
+        {
+            if(a[i]>f[sum].second)
+            {
+                f[sum].second=a[i];
+            }
+            if(f[sum].first<f[sum].second)
+            {
+                std::swap(f[sum].first,f[sum].second);
+            }
+            maxsum=std::max(maxsum,f[sum].first+f[sum].second);
+        }
+    }
+    if(maxsum!=0)
+    return maxsum;
+    else
+        return -1;
+}
